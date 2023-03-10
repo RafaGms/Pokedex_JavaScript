@@ -1,0 +1,21 @@
+* {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: #f6f8fc;
+}
+.content {
+  padding: 1rem;
+  background: #fff;
+  height: 100vh;
+}
+.content h1 {
+  font-size: 2em;
+  margin: 1rem 0;
+  letter-spacing: .25rem;
+}
+
+
