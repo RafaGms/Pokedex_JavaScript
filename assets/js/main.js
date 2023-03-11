@@ -2,18 +2,21 @@ const offset = 0;
 const limit = 10
 const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
+function pokemonConvertTypes(pokemonTypes){
+return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
+}
+
 function pokemonConvertToHtml(pokemon){
    return `<li class="pokemon">
-   <span class="number">#001</span>
+   <span class="number">#${pokemon.order}</span>
    <span class="name">${pokemon.name}</span>
 
    <div class="details">
       <ol class="types">
-         <li class="type">glass</li>
-         <li class="type">poison</li>
+         ${pokemonConvertTypes(pokemon.types).join('')}
       </ol>
       <img
-         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
+         src="${pokemon.sprites.other.dream_world.front_default}"
          alt="${pokemon.name}">
    </div>
 </li>`
