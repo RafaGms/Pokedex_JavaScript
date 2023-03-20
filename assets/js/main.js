@@ -1,39 +1,38 @@
-const offset = 0;
-const limit = 10
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+const listPokemon = document.getElementById("listPokemon");
+const loadPage = document.getElementById("loadPage");
+var limit = 12;
+var offset = 0;
 
-function pokemonConvertTypes(pokemonTypes){
-return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
+function loadPokemon(offset, limit) {
+  pokeApi.getPokemon(offset, limit).then((pokemonList = []) => {
+    const newHtml = pokemonList
+      .map(
+        (pokemon) =>
+          `<li class="pokemon ${pokemon.tipo}">
+    <span class="number  ">#${pokemon.numero}</span>
+    <span class="name">${pokemon.nome}</span>
+ 
+    <div class="details">
+       <ol class="types">
+          ${pokemon.tipos
+            .map((tipo) => `<li class="type ${tipo} ">${tipo}</li>`)
+            .join("")}
+            </ol>
+            <img
+            src="${pokemon.foto}"
+            alt="${pokemon.nome}">  
+            </div>
+            </li>`
+      )
+      .join("");
+    listPokemon.innerHTML += newHtml;
+  });
 }
 
-function pokemonConvertToHtml(pokemon){
-   return `<li class="pokemon">
-   <span class="number">#${pokemon.order}</span>
-   <span class="name">${pokemon.name}</span>
+loadPokemon(offset, limit);
 
-   <div class="details">
-      <ol class="types">
-         ${pokemonConvertTypes(pokemon.types).join('')}
-      </ol>
-      <img
-         src="${pokemon.sprites.other.dream_world.front_default}"
-         alt="${pokemon.name}">
-   </div>
-</li>`
-}
-
-const listPokemon = document.getElementById('listPokemon')
-
-pokeApi.getPokemon().then((pokemonList = [])  => { 
-
-listPokemon.innerHTML += pokemonList.map(pokemonConvertToHtml).join('');;
-
-// const listItems = [];
-   // for (let i = 0; i < pokemonList.length; i++) {
-   //    const pokemon = pokemonList[i];
-   //    listItems.push(pokemonConvertToHtml(pokemon));
-   //    // listPokemon.innerHTML += pokemonConvertToHtml(pokemon);
-   // }
-   // console.log(listItems);
-})
-
+loadPage.addEventListener("click", () => {
+  offset += limit;
+  loadPokemon(offset, limit);
+  console.log(offset);
+});
